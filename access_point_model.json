@@ -1,0 +1,15 @@
+{
+    "model": "model_name",
+    "useType": "use_type",
+    "chipsetVendor": "chipset",
+    "capabilities": {
+        "scp": "scp",
+        "ipv4": "ipv4",
+        "ipv6": "ipv6",
+        "standards": {
+            "standard_item": "standard_item"
+        },
+       "max_band_24": "max_band_2g",
+       "max_band_5": "max_band_5g"
+    }
+}

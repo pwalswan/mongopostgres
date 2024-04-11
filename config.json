@@ -1,0 +1,15 @@
+{
+    "mongodb": {
+        "host": "localhost",
+        "port": 27017,
+        "username": "automin",
+        "password": "not>H5M81*0C9"
+    },
+    "collection_names": {
+        "location": false,
+        "vendor": false,
+        "topology": false,
+        "inventories": true
+    },
+    "load_access_point_device_model": false
+}
