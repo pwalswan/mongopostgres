@@ -9,11 +9,11 @@ def get_django_config():
 get_django_config()
 import django
 django.setup()
-from invman.models.topology_etl import ETLIxia76Topology, ETLIxia76MultiAPTopology, ETLIxiaWifi6Topology, ETLIxiaWifi6ETopology
-from invman.models.firmware_ap import FirmwareVersion
-from invman.models.location import Location, LOCATION_TYPE_CHOICES
-from invman.models.vendor import Vendor, VENDOR_CHOICES
-from invman.models import AccessPoint, AccessPointModel
+from models.topology_etl import ETLIxia76Topology, ETLIxia76MultiAPTopology, ETLIxiaWifi6Topology, ETLIxiaWifi6ETopology
+from models.firmware_ap import FirmwareVersion
+from models.location import Location, LOCATION_TYPE_CHOICES
+from models.vendor import Vendor, VENDOR_CHOICES
+from models import AccessPoint, AccessPointModel
 import utils
 import django.db.models as models
 from django.db import IntegrityError
@@ -51,7 +51,7 @@ class AccessPointModelTransformer(BaseTransformer):
         for dut_document in mongo_data:
             print(dut_document['model'])
             dut_row = AccessPointModel()
-            dut_mapping = utils.open_file('django/invman/etl/access_point_model.json')
+            dut_mapping = utils.open_file('etl/access_point_model.json')
 
             utils.set_mapped_values(dut_document, dut_row, dut_mapping)
 
@@ -73,13 +73,13 @@ class TopologyTransformer(BaseTransformer):
             try:
                 if document['metaData']['version'] == '7.5':
                     topology_row = ETLIxia76Topology()
-                    topology_mapping = utils.open_file('django/invman/etl/ETLIxia76Topology.json')
+                    topology_mapping = utils.open_file('etl/ETLIxia76Topology.json')
                 elif document['metaData']['version'] == '7.6':
                     topology_row = ETLIxia76Topology()
-                    topology_mapping = utils.open_file('django/invman/etl/ETLIxia76Topology.json')
+                    topology_mapping = utils.open_file('etl/ETLIxia76Topology.json')
                 elif document['metaData']['version'] == '9.x':
                     topology_row = ETLIxiaWifi6ETopology()
-                    topology_mapping = utils.open_file('django/invman/etl/ETLIxia76Topology.json')
+                    topology_mapping = utils.open_file('etl/ETLIxia76Topology.json')
                 else:
                     print('Invalid...')
             except KeyError:
@@ -102,7 +102,7 @@ class InventoriesTransformer(BaseTransformer):
                     try:
                         print('Firmware version ' + str(document['version']))
                         firmware_row = FirmwareVersion()
-                        firmware_mapping = utils.open_file('django/invman/etl/firmware_ap.json')
+                        firmware_mapping = utils.open_file('etl/firmware_ap.json')
                     except Exception as e:
                         print(f"Continuiung on Exception: {e}")
 
@@ -122,7 +122,7 @@ class InventoriesTransformer(BaseTransformer):
                     try:
                         print('DUT model ' + str(document['model']))
                         dut_row = AccessPoint()
-                        dut_mapping = utils.open_file('django/invman/etl/dut.json')
+                        dut_mapping = utils.open_file('etl/dut.json')
                     except Exception as e:
                         print(f"Continuiung on Exception: {e}")
 
